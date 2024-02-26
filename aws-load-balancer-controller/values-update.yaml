@@ -1,0 +1,15 @@
+controller:
+  clusterName: terraform-eks-cluster
+
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::504122215048:role/AmazonEKSLoadBalancerControllerRole
+  name: aws-load-balancer-controller
+
+ingress:
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: public-alb-terraform-eks-cluster
+    alb.ingress.kubernetes.io/group.name: public-1
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
