@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: ofekmalul/web_app
+  pullPolicy: IfNotPresent
+  tag: "1.0.23"
+
+myLabel: 'web-app'
+
+service:
+  name: web-app-service
+  type: ClusterIP
+  port: 9090
+  targetPort: 9090
