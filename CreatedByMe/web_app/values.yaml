@@ -9,6 +9,6 @@ myLabel: 'web-app'
 
 service:
   name: web-app-service
-  type: ClusterIP
+  type: NodePort
   port: 9090
   targetPort: 9090
