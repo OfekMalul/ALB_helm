@@ -1,0 +1,12 @@
+ingress:
+  enabled: true
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: public-alb-terraform-eks-cluster
+    alb.ingress.kubernetes.io/group.name: public-1
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  ingressClassName: alb
+  hosts:
+    - name: www.sonarqube-ofek.com # This is beacuse i dont have a dns so alb uses my /etc/hosts file to get hostname for the loadbalancer
+      path: /
+      pathType: Prefix # means that the path in the http request must start with /
