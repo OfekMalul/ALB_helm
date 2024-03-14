@@ -1,0 +1,5 @@
+controller:
+  serviceAccount:
+    name: ebs-csi-controller
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::504122215048:role/ebs-csi-terraform-eks-cluster
