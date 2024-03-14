@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: ofekmalul/bitcoin
+  pullPolicy: IfNotPresent
+  tag: "1.0.1"
+
+name: 'app'
+
+service:
+  name: web-app-service
+  type: NodePort
+  port: 9090
+  targetPort: 9090
