@@ -20,6 +20,7 @@ ingress:
     alb.ingress.kubernetes.io/group.name: public-1
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
   hostname: weather.ofek.kubegurus.com
   path: /
   class: alb
