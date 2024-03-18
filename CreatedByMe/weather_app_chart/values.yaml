@@ -10,7 +10,7 @@ myLabel: 'web-app'
 service:
   name: web-app-service
   type: ClusterIP
-  port: 80
+  port: 443
   targetPort: 9090
 
 ingress:
