@@ -11,13 +11,25 @@ server:
       alb.ingress.kubernetes.io/group.name: public-1
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/backend-protocol: HTTP
-      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":80}, {"HTTPS":443}]'
-      alb.ingress.kubernetes.io/ssl-redirect: '443'
+      alb.ingress.kubernetes.io/backend-protocol: HTTPS
+      alb.ingress.kubernetes.io/conditions.argogrpc: |
+        [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Content-Type", "values":["application/grpc"]}}]
     ingressClassName: alb
-    hostname: argo.ofek.com # This is beacuse i dont have a dns so alb uses my /etc/hosts file to get hostname for the loadbalancer
+    hostname: argo.ofek.kubegurus.com 
     path: /
     pathType: Prefix
     aws:
       serviceType: ClusterIP # <- Used with target-type: ip
       backendProtocolVersion: GRPC
+
+apps: 
+  - name:           weather-app-argo-application
+    namespace_argo: argocd
+    project:        default
+    repoURL:        https://github.com/OfekMalul/helm_charts.git
+    targetRevision: HEAD
+    path:           CreatedByMe/weather_app_chart
+    server:         https://kubernetes.default.svc
+    namespace:      default
+    selfHeal:       true    # If anyone will kubectl apply argo will revert the changes according to gitops
+    prune:          true    # If resource does not exist in git argo can delete it
