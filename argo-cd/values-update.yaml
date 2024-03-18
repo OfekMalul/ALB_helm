@@ -1,21 +1,24 @@
+global:
+  domain: argo.ofek.kubegurus.com
 configs:
   params:
     server.insecure: true
-
 server:
   ingress:
     enabled: true
     controller: aws
+    ingressClassName: alb
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: public-alb-terraform-eks-cluster
       alb.ingress.kubernetes.io/group.name: public-1
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/backend-protocol: HTTPS
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+      alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/conditions.argogrpc: |
         [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Content-Type", "values":["application/grpc"]}}]
-    ingressClassName: alb
-    hostname: argo.ofek.kubegurus.com 
+    hostname: argo.ofek.kubegurus.com # This is beacuse i dont have a dns so alb uses my /etc/hosts file to get hostname for the loadbalancer
     path: /
     pathType: Prefix
     aws:
