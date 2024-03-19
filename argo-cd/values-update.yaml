@@ -1,8 +1,14 @@
+# Author: Ofek Malul
+
+# global.domain is used to have default domain to all components of argo such as ingress and service.
 global:
   domain: argo.ofek.kubegurus.com
+
+# Enable unsecure traffic to access the Argo API server
 configs:
   params:
     server.insecure: true
+
 server:
   ingress:
     enabled: true
@@ -18,7 +24,7 @@ server:
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/conditions.argogrpc: |
         [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Content-Type", "values":["application/grpc"]}}]
-    hostname: argo.ofek.kubegurus.com # This is beacuse i dont have a dns so alb uses my /etc/hosts file to get hostname for the loadbalancer
+    hostname: argo.ofek.kubegurus.com # Provided DNS name
     path: /
     pathType: Prefix
     aws:
